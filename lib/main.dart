@@ -14,10 +14,12 @@ void main() async {
 Future<void> _requestMicrophonePermission() async {
   var status = await Permission.microphone.request();
   if (status.isDenied || status.isPermanentlyDenied) {
-    print("Microphone permission denied");
-    return;
-    // You can show a dialog guiding the user to enable permissions
+    _log('Microphone permission denied');
   }
+}
+
+void _log(String message) {
+  debugPrint(message);
 }
 
 class EchoTypeApp extends StatelessWidget {
@@ -33,7 +35,10 @@ class EchoTypeApp extends StatelessWidget {
         '/welcome': (context) => const WelcomeScreen(),
         '/main_menu': (context) => const MainMenuScreen(),
         '/listening': (context) => const ListeningScreen(),
-        '/notes': (context) => const NotesScreen(),
+        '/notes': (context) => const NotesScreen(
+          transcription: 'No transcription available',
+          formattedNotes: 'No notes available',
+        ), // Added default arguments to fix errors
       },
     );
   }
